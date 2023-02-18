@@ -77,12 +77,45 @@ class Stage {
 
     start(){
         this.update()
+
+        this.fighter1el.querySelector('.attackButton').addEventListener('click', () => this.doAttack(this.fighter1, this.fighter2))
+
+        this.fighter2el.querySelector('.attackButton').addEventListener('click', () => this.doAttack(this.fighter2, this.fighter1))
+
     }
 
     update(){
-        this.fighter1el.querySelector('.name').innerHTML = this.fighter1.name
+        this.fighter1el.querySelector('.name').innerHTML = `${this.fighter1.name} - ${this.fighter1.life} HP`
+        let f1pct = (this.fighter1.life / this.fighter1.maxLife) * 100
+        this.fighter1el.querySelector('.bar').style.width = `${f1pct}%`
 
-        this.fighter2el.querySelector('.name').innerHTML = this.fighter2.name
+        this.fighter2el.querySelector('.name').innerHTML = `${this.fighter2.name} - ${this.fighter2.life} HP`
+        let f2pct = (this.fighter2.life / this.fighter2.maxLife) * 100
+        this.fighter2el.querySelector('.bar').style.width = `${f2pct}%`
     }
+
+    doAttack(attacking, attacked){
+        
+        if(attacking.life <= 0 || attacked.life <= 0){
+            return
+        }
+
+        let attackFactor = (Math.random() * 2).toFixed(2)
+        let defenseFactor = (Math.random() * 2).toFixed(2)
+
+        let actualAttack = attacking.attack * attackFactor
+        let actualDefense = attacked.defense * defenseFactor
+
+        if(actualAttack > actualDefense) {
+            attacked.life -= actualAttack
+            
+        } else {
+
+        }
+
+        this.update()
+
+    }
+
 
 }
