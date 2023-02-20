@@ -68,11 +68,12 @@ class bigMonster extends Character {
 }
 
 class Stage {
-    constructor(fighter1, fighter2, fighter1el, fighter2el){
+    constructor(fighter1, fighter2, fighter1el, fighter2el, logObject){
         this.fighter1 = fighter1
         this.fighter2 = fighter2
         this.fighter1el = fighter1el
         this.fighter2el = fighter2el
+        this.log = logObject
     }
 
     start(){
@@ -97,7 +98,7 @@ class Stage {
     doAttack(attacking, attacked){
         
         if(attacking.life <= 0 || attacked.life <= 0){
-            return
+            this.log.addMessage('Atacando cachorro morto')
         }
 
         let attackFactor = (Math.random() * 2).toFixed(2)
@@ -108,14 +109,36 @@ class Stage {
 
         if(actualAttack > actualDefense) {
             attacked.life -= actualAttack
+            this.log.addMessage(`${attacking.name} causou ${actualAttack} de dano em ${attacked.name}`)
             
         } else {
-
+            this.log.addMessage(`${attacked.name} conseguiu defender`)
         }
 
         this.update()
 
     }
+}
 
+class Log {
+
+    list = []
+
+    constructor(listEl) {
+        this.listEl = listEl
+    }
+
+    addMessage(msg) {
+        this.list.push(msg)
+        this.render()
+    }
+
+    render() {
+        this.listEl.innerHTML = ''
+
+        for(let i in this.list) {
+            this.listEl.innerHTML += `<li>${this.list[i]}</li>`
+        }
+    }
 
 }

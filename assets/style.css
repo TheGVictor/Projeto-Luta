@@ -6,6 +6,7 @@
 
 .fightarea{
     display: flex;
+    
     gap: 20px;
 }
 
@@ -31,4 +32,8 @@
     border: 1px dotted #999;
     height: 200px;
     overflow-y: scroll;
+}
+
+.fightarea, .log  {
+    padding: 50px;
 }
